@@ -37,40 +37,71 @@ void Frame_Base::exitbtn(String title, uint16_t width) {
     _key_exit->CanvasPressed()->ReverseColor();
 }
 
-void Frame_Base::CheckAutoPowerSave() {
-    unsigned long now = millis();
-    int footer_height = 28;
-    int margin_bottom = 10;
-    if (now - g_last_active_time_millis > TIME_BEFORE_SHUTDOWN_MS) {
-        log_d("The idle time reached, shutdown now.");
-        Shutdown();
-    } else if (now - g_last_active_time_millis >
-               TIME_BEFORE_SHUTDOWN_PROMPT_MS) {
-        if (!_shutdown_prompt_is_shown) {
+#define footer_height 150
+#define margin_bottom 20
+
+void Frame_Base::PowerWarning(){
+    if (!_shutdown_prompt_is_shown) {
             log_d("Show shutdown prompt");
             _canvas_footer = new M5EPD_Canvas(&M5.EPD);
             _canvas_footer->createCanvas(540, footer_height);
-            _canvas_footer->setTextSize(26);
             _canvas_footer->setTextDatum(CC_DATUM);
-            char buf0[128];
-            char buf1[128];
-            sprintf(buf0, "Idle for: %d ", TIME_BEFORE_SHUTDOWN_PROMPT_MS);
-            sprintf(buf1, "Shutting Off to save power, touch to continue?");
-            _canvas_footer->drawString(buf0, 270, (footer_height / 2)-20);
-            _canvas_footer->drawString(buf1, 270, footer_height / 2);
+            _canvas_footer->setTextSize(26);
+            _canvas_footer->fillCanvas(0);
+            char buf[128];
+            sprintf(buf, "Idle for: %ds", TIME_BEFORE_SHUTDOWN_PROMPT_MS/1000);
+            _canvas_footer->drawString(buf, 270, (footer_height / 4));
+            sprintf(buf, "Shutting Off in %ds to save power", TIME_BEFORE_SHUTDOWN_MS/1000);
+            _canvas_footer->drawString(buf, 270, footer_height / 2);
+            sprintf(buf, "Touch to continue?");
+            _canvas_footer->drawString(buf, 270, (footer_height / 4)*3);
             _canvas_footer->pushCanvas(0, 960 - footer_height - margin_bottom,
-                                       UPDATE_MODE_DU4);
+                                       UPDATE_MODE_GL16);
+
             _shutdown_prompt_is_shown = true;
-        }
-    } else if (_shutdown_prompt_is_shown) {
-        // active again and _shutdown_prompt_is_shown == true, hide prompt
-        log_d("Become active again, hide prompt");
-        _canvas_footer->fillCanvas(0);
-        _canvas_footer->pushCanvas(0, 960 - footer_height - margin_bottom,
-                                   UPDATE_MODE_DU4);
-        _shutdown_prompt_is_shown = false;
     }
 }
+void Frame_Base::ShutoffCancel(){
+    if (_shutdown_prompt_is_shown) {
+            log_d("Show shutdown cancel prompt");
+            _canvas_footer->fillCanvas(0);
+            char buf[128];
+            sprintf(buf, "Shutdown Cancelled Successfully");
+            _canvas_footer->drawString(buf, 270, (footer_height / 4));
+            sprintf(buf, "Idle Warning Time: %ds", TIME_BEFORE_SHUTDOWN_PROMPT_MS/1000);
+            _canvas_footer->drawString(buf, 270, footer_height / 2);
+            sprintf(buf, "Shutdown time %ds", (TIME_BEFORE_SHUTDOWN_MS)/1000);     
+            _canvas_footer->drawString(buf, 270, (footer_height / 4)*3);
+            _canvas_footer->pushCanvas(0, 960 - footer_height - margin_bottom,
+                                       UPDATE_MODE_GL16);
+
+            _shutdown_prompt_is_shown = false;
+    }
+}
+
+void Frame_Base::CheckAutoPowerSave() {
+    unsigned long now = millis();
+
+    if (now - g_last_active_time_millis > TIME_BEFORE_SHUTDOWN_MS) {
+        
+        log_d("The idle time reached, shutdown now.");
+        Shutdown();
+
+    } else if (now - g_last_active_time_millis >
+               TIME_BEFORE_SHUTDOWN_PROMPT_MS) {
+
+                log_d("Display idle time warning");
+                PowerWarning();
+        
+    } else if (_shutdown_prompt_is_shown) {
+
+        // active again and _shutdown_prompt_is_shown == true, hide prompt
+        log_d("Become active again, show cancelation Prompt");
+        ShutoffCancel();
+    }
+}
+
+
 
 int Frame_Base::run(void) {
     if (ENABLE_AUTO_POWER_SAVE) {

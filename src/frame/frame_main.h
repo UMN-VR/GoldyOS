@@ -3,6 +3,11 @@
 
 #include "frame_base.h"
 
+#define NUM_Keys 16
+
+#define NUM_Rows 4
+#define NUM_Cols 4
+
 class Frame_Main : public Frame_Base {
    public:
     Frame_Main();
@@ -13,7 +18,7 @@ class Frame_Main : public Frame_Base {
     void AppName(m5epd_update_mode_t mode);
 
    private:
-    EPDGUI_Button *_key[12];
+    EPDGUI_Button *_key[NUM_Keys];
     M5EPD_Canvas *_bar;
     M5EPD_Canvas *_names;
     uint32_t _next_update_time;

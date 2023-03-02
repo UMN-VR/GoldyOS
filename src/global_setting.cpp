@@ -2,11 +2,13 @@
 #include "./resources/ImageResource.h"
 #include "esp32-hal-log.h"
 #include <WiFi.h>
+#include "Free_Fonts.h"
 
 #define DEFAULT_WALLPAPER 1
 SemaphoreHandle_t _xSemaphore_LoadingAnime = NULL;
 static uint8_t _loading_anime_eixt_flag    = false;
 esp_err_t __espret__;
+
 #define NVS_CHECK(x)            \
     __espret__ = x;             \
     if (__espret__ != ESP_OK) { \
@@ -257,11 +259,50 @@ void LoadingAnime_32x32_Stop() {
     delay(200);
 }
 
+
+
 void Shutdown() {
+    #define footer_height 150
+    #define margin_bottom 20
+    char buf[128];
     log_d("Now the system is shutting down.");
     M5.EPD.Clear();
-    M5.EPD.WritePartGram4bpp(92, 182, 356, 300, GoldyOS_Wallpaper_356x300);
-    M5.EPD.UpdateFull(UPDATE_MODE_GC16);
+
+    M5EPD_Canvas canvas(&M5.EPD);
+    canvas.createCanvas(540, footer_height);
+    canvas.setTextDatum(CC_DATUM);
+
+    canvas.setTextSize(38);
+    canvas.setFreeFont(FF24);
+
+    canvas.fillCanvas(0);
+    sprintf(buf,"%s",Robot_Name);
+    canvas.drawString(buf, 270, (footer_height/4));
+    canvas.pushCanvas(0,30,UPDATE_MODE_GC16);
+
+    canvas.setFreeFont(FF18);
+
+    canvas.fillCanvas(0);
+    sprintf(buf,"1: Press the Button Below to reset CPU");
+    canvas.drawString(buf, 270, (footer_height/4));
+    sprintf(buf,"2: Press & Hold Joy for 5s To Restart OS");
+    canvas.drawString(buf, 270, (footer_height/4)*3);
+    canvas.pushCanvas(20,350,UPDATE_MODE_GC16);
+
+    canvas.fillCanvas(0);
+    sprintf(buf,"%s  is sleeping", OS_Version);
+    canvas.drawString(buf, 270, (footer_height/4));
+    sprintf(buf,"Designed by Felipe Galindo");
+    canvas.drawString(buf, 270, footer_height/2);
+    sprintf(buf,"In Minnesota");
+    canvas.drawString(buf, 270, (footer_height/4)*3);
+    canvas.pushCanvas(0,960 - footer_height - margin_bottom,UPDATE_MODE_GC16);
+
+    M5.EPD.WritePartGram4bpp(92, 500, 356, 300, GoldyOS_Wallpaper_356x300);
+
+    M5.EPD.WritePartGram4bpp(500, 485, 32, 32, ImageResource_item_icon_arrow_r_32x32);
+    M5.EPD.WritePartGram4bpp(500, 280, 32, 32, ImageResource_item_icon_arrow_r_32x32);
+
     M5.EPD.UpdateFull(UPDATE_MODE_GC16);
     SaveSetting();
     delay(600);

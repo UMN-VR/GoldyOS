@@ -41,6 +41,8 @@ class Frame_Base {
    private:
     bool _shutdown_prompt_is_shown = false;
     void CheckAutoPowerSave();
+    void PowerWarning();
+    void ShutoffCancel();
 };
 
 #endif

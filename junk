@@ -1,1 +1,37 @@
 
+//ROW 3 App Icons
+
+    //key12
+    _key[kKeyShutdown]->CanvasNormal()->pushImage(0, 0, 92, 92, ImageResource_main_rCTR_92x92);
+    *(_key[kKeyShutdown]->CanvasPressed()) =
+        *(_key[kKeyShutdown]->CanvasNormal());
+    _key[kKeyShutdown]->CanvasPressed()->ReverseColor();
+    _key[kKeyShutdown]->AddArgs(EPDGUI_Button::EVENT_RELEASED, 0,
+                                (void *)(&_is_run));
+    _key[kKeyShutdown]->Bind(EPDGUI_Button::EVENT_RELEASED, key_lifegame_cb);
+
+    //key13
+    _key[kKeyReboot]->CanvasNormal()->pushImage(0, 0, 92, 92, ImageResource_main_ota_92x92);
+    *(_key[kKeyReboot]->CanvasPressed()) = *(_key[kKeyReboot]->CanvasNormal());
+    _key[kKeyReboot]->CanvasPressed()->ReverseColor();
+    _key[kKeyReboot]->AddArgs(EPDGUI_Button::EVENT_RELEASED, 0,
+                              (void *)(&_is_run));
+    _key[kKeyReboot]->Bind(EPDGUI_Button::EVENT_RELEASED, key_sdfile_cb);
+
+    //key14
+    _key[kKeyM0]->CanvasNormal()->pushImage(0, 0, 92, 92, ImageResource_main_reTest_92x92);
+    *(_key[kKeyM0]->CanvasPressed()) =
+        *(_key[kKeyM0]->CanvasNormal());
+    _key[kKeyM0]->CanvasPressed()->ReverseColor();
+    _key[kKeyM0]->AddArgs(EPDGUI_Button::EVENT_RELEASED, 0,
+                               (void *)(&_is_run));
+    _key[kKeyM0]->Bind(EPDGUI_Button::EVENT_RELEASED, key_compare_cb);
+
+    //key15
+    _key[kKeyM1]->CanvasNormal()->pushImage(0, 0, 92, 92, ImageResource_main_icon_home_92x92);
+    *(_key[kKeyM1]->CanvasPressed()) = *(_key[kKeyM1]->CanvasNormal());
+    _key[kKeyM1]->CanvasPressed()->ReverseColor();
+    _key[kKeyM1]->AddArgs(EPDGUI_Button::EVENT_RELEASED, 0,
+                            (void *)(&_is_run));
+    _key[kKeyM1]->Bind(EPDGUI_Button::EVENT_RELEASED, key_home_cb);
+
