@@ -1,3 +1,3 @@
-# GoldyOS 6.0.1
+# GoldyOS
 
 PlatformIO Project for M5Paper based of M5Paper_FactoryTest
