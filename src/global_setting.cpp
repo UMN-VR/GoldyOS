@@ -1,5 +1,6 @@
 #include "global_setting.h"
 #include "./resources/ImageResource.h"
+#include "./resources/BinaryAppLogos.h"
 #include "esp32-hal-log.h"
 #include <WiFi.h>
 #include "Free_Fonts.h"
@@ -18,7 +19,7 @@ esp_err_t __espret__;
     }
 
 const uint8_t *wallpapers[] = {
-    GoldyOS_Wallpaper_356x300,
+    GoldyOS_Wallpaper_540x960,
     ImageResource_wallpaper_engine_540x960,
     ImageResource_wallpaper_penrose_triangle_540x960};
 
