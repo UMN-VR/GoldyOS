@@ -32,9 +32,9 @@ const uint8_t *kIMGLoading[16] = {
     ImageResource_item_loading_11_32x32, ImageResource_item_loading_12_32x32,
     ImageResource_item_loading_13_32x32, ImageResource_item_loading_14_32x32,
     ImageResource_item_loading_15_32x32, ImageResource_item_loading_16_32x32};
-const char *wallpapers_name_en[] = {"M5Paper", "Engine", "Penrose Triangle"};
-const char *wallpapers_name_zh[] = {"M5Paper", "引擎", "彭罗斯三角"};
-const char *wallpapers_name_ja[] = {"M5Paper", "エンジン",
+const char *wallpapers_name_en[] = {"GoldyOS", "Engine", "Penrose Triangle"};
+const char *wallpapers_name_zh[] = {"GoldyOS", "引擎", "彭罗斯三角"};
+const char *wallpapers_name_ja[] = {"GoldyOS", "エンジン",
                                     "ペンローズの三角形"};
 uint16_t global_wallpaper        = DEFAULT_WALLPAPER;
 uint8_t global_language          = LANGUAGE_EN;

@@ -1,0 +1,4 @@
+#ifndef BINARYWALLPAPERS
+#define BINARYWALLPAPERS
+
+#endif

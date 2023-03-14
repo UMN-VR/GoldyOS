@@ -6,6 +6,7 @@
 #include "../global_setting.h"
 #include "../resources/ImageResource.h"
 #include "../resources/BinaryAppLogos.h"
+#include "../resources/BinaryWallpapers.h"
 
 typedef std::vector<void*> epdgui_args_vector_t;
 
