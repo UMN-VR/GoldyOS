@@ -94,34 +94,7 @@ Frame_Home::Frame_Home(void) {
     canvas_temp.createRender(36);
     uint8_t language = GetLanguage();
 
-    if (language == LANGUAGE_JA) {
-        InitSwitch(_sw_light1, "ランプ", "客間",
-                   ImageResource_home_icon_light_off_92x92,
-                   ImageResource_home_icon_light_on_92x92);
-        InitSwitch(_sw_light2, "ランプ", "寝室",
-                   ImageResource_home_icon_light_off_92x92,
-                   ImageResource_home_icon_light_on_92x92);
-        InitSwitch(_sw_socket1, "炊飯器", "厨房",
-                   ImageResource_home_icon_socket_off_92x92,
-                   ImageResource_home_icon_socket_on_92x92);
-        InitSwitch(_sw_socket2, "パソコン", "寝室",
-                   ImageResource_home_icon_socket_off_92x92,
-                   ImageResource_home_icon_socket_on_92x92);
-    } else if (language == LANGUAGE_ZH) {
-        InitSwitch(_sw_light1, "吸顶灯", "客厅",
-                   ImageResource_home_icon_light_off_92x92,
-                   ImageResource_home_icon_light_on_92x92);
-        InitSwitch(_sw_light2, "台灯", "卧室",
-                   ImageResource_home_icon_light_off_92x92,
-                   ImageResource_home_icon_light_on_92x92);
-        InitSwitch(_sw_socket1, "电饭煲", "厨房",
-                   ImageResource_home_icon_socket_off_92x92,
-                   ImageResource_home_icon_socket_on_92x92);
-        InitSwitch(_sw_socket2, "电脑", "卧室",
-                   ImageResource_home_icon_socket_off_92x92,
-                   ImageResource_home_icon_socket_on_92x92);
-    } else {
-        InitSwitch(_sw_light1, "Ceiling Light", "Living Room",
+    InitSwitch(_sw_light1, "Ceiling Light", "Living Room",
                    ImageResource_home_icon_light_off_92x92,
                    ImageResource_home_icon_light_on_92x92);
         InitSwitch(_sw_light2, "Table Lamp", "Bedroom",
@@ -133,19 +106,12 @@ Frame_Home::Frame_Home(void) {
         InitSwitch(_sw_socket2, "Computer", "Bedroom",
                    ImageResource_home_icon_socket_off_92x92,
                    ImageResource_home_icon_socket_on_92x92);
-    }
 
     memcpy(_sw_air_1->Canvas(0)->frameBuffer(),
            ImageResource_home_air_background_228x184, 228 * 184 / 2);
     _sw_air_1->Canvas(0)->setTextDatum(TC_DATUM);
     _sw_air_1->Canvas(0)->setTextSize(26);
-    if (language == LANGUAGE_JA) {
-        _sw_air_1->Canvas(0)->drawString("寝室", 114, 152);
-    } else if (language == LANGUAGE_ZH) {
-        _sw_air_1->Canvas(0)->drawString("卧室", 114, 152);
-    } else {
-        _sw_air_1->Canvas(0)->drawString("Bedroom", 114, 152);
-    }
+    _sw_air_1->Canvas(0)->drawString("Bedroom", 114, 152);
     memcpy(_sw_air_1->Canvas(1)->frameBuffer(),
            _sw_air_1->Canvas(0)->frameBuffer(), 228 * 184 / 2);
     _sw_air_1->Canvas(0)->setTextSize(36);
@@ -159,13 +125,7 @@ Frame_Home::Frame_Home(void) {
            ImageResource_home_air_background_228x184, 228 * 184 / 2);
     _sw_air_2->Canvas(0)->setTextDatum(TC_DATUM);
     _sw_air_2->Canvas(0)->setTextSize(26);
-    if (language == LANGUAGE_JA) {
-        _sw_air_2->Canvas(0)->drawString("客間", 114, 152);
-    } else if (language == LANGUAGE_ZH) {
-        _sw_air_2->Canvas(0)->drawString("客厅", 114, 152);
-    } else {
-        _sw_air_2->Canvas(0)->drawString("Living Room", 114, 152);
-    }
+    _sw_air_2->Canvas(0)->drawString("Living Room", 114, 152);
     memcpy(_sw_air_2->Canvas(1)->frameBuffer(),
            _sw_air_2->Canvas(0)->frameBuffer(), 228 * 184 / 2);
     _sw_air_2->Canvas(0)->setTextSize(36);
@@ -228,16 +188,7 @@ Frame_Home::Frame_Home(void) {
     _sw_air_2->AddArgs(1, 2, _sw_air_2);
     _sw_air_2->Bind(1, key_home_air_state1_cb);
 
-    if (language == LANGUAGE_JA) {
-        exitbtn("ホーム");
-        _canvas_title->drawString("コントロールパネル", 270, 34);
-    } else if (language == LANGUAGE_ZH) {
-        exitbtn("主页");
-        _canvas_title->drawString("控制面板", 270, 34);
-    } else {
-        exitbtn("Home");
-        _canvas_title->drawString("Control Panel", 270, 34);
-    }
+    _canvas_title->drawString("Control Panel", 270, 34);
 
     _key_exit->AddArgs(EPDGUI_Button::EVENT_RELEASED, 0, (void *)(&_is_run));
     _key_exit->Bind(EPDGUI_Button::EVENT_RELEASED, &Frame_Base::exit_cb);

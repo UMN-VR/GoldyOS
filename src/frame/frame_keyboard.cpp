@@ -44,12 +44,8 @@ Frame_Keyboard::Frame_Keyboard(bool isHorizontal) : Frame_Base() {
     uint8_t language = GetLanguage();
     if (isHorizontal) {
         inputbox = new EPDGUI_Textbox(84, 25, 712, 250);
-        if (language == LANGUAGE_JA)
-            key_textclear = new EPDGUI_Button("削除", 804, 25, 72, 120);
-        else if (language == LANGUAGE_ZH)
-            key_textclear = new EPDGUI_Button("清屏", 804, 25, 72, 120);
-        else
-            key_textclear = new EPDGUI_Button("CLR", 804, 25, 72, 120);
+        key_textclear = new EPDGUI_Button("CLR", 804, 25, 72, 120);
+            
 
         key_textsize_plus  = new EPDGUI_Button("+", 804, 157, 72, 40);
         key_textsize_reset = new EPDGUI_Button("26", 804, 196, 72, 40);
@@ -57,12 +53,8 @@ Frame_Keyboard::Frame_Keyboard(bool isHorizontal) : Frame_Base() {
     } else {
         const uint16_t kKeyBaseY = 628;
         inputbox                 = new EPDGUI_Textbox(4, 100, 532, 512);
-        if (language == LANGUAGE_JA)
-            key_textclear = new EPDGUI_Button("削除", 4, kKeyBaseY, 260, 52);
-        else if (language == LANGUAGE_ZH)
-            key_textclear = new EPDGUI_Button("清屏", 4, kKeyBaseY, 260, 52);
-        else
-            key_textclear = new EPDGUI_Button("CLR", 4, kKeyBaseY, 260, 52);
+        key_textclear = new EPDGUI_Button("CLR", 4, kKeyBaseY, 260, 52);
+            
 
         key_textsize_plus  = new EPDGUI_Button("+", 448, kKeyBaseY, 88, 52);
         key_textsize_reset = new EPDGUI_Button("26", 360, kKeyBaseY, 88, 52);
@@ -94,16 +86,7 @@ Frame_Keyboard::Frame_Keyboard(bool isHorizontal) : Frame_Base() {
     key_textsize_minus->Bind(EPDGUI_Button::EVENT_RELEASED,
                              key_textsize_minus_cb);
 
-    if (language == LANGUAGE_JA) {
-        exitbtn("ホーム");
-        _canvas_title->drawString("鍵盤", 270, 34);
-    } else if (language == LANGUAGE_ZH) {
-        exitbtn("主页");
-        _canvas_title->drawString("键盘", 270, 34);
-    } else {
-        exitbtn("Home");
-        _canvas_title->drawString("Keyboard", 270, 34);
-    }
+    _canvas_title->drawString("Keyboard", 270, 34);
 
     _key_exit->AddArgs(EPDGUI_Button::EVENT_RELEASED, 0, (void *)(&_is_run));
     _key_exit->Bind(EPDGUI_Button::EVENT_RELEASED, &Frame_Base::exit_cb);

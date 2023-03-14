@@ -8,6 +8,9 @@
 #include "frame_compare.h"
 #include "frame_home.h"
 
+#include "frame_rCtr.h"
+#include "frame_OTA.h"
+
 enum {
     kKeyFactoryTest = 0,
     kKeySetting,
@@ -108,14 +111,25 @@ void key_home_cb(epdgui_args_vector_t &args) {
 }
 
 void key_rCtr_cb(epdgui_args_vector_t &args) {
-    Frame_Base *frame = EPDGUI_GetFrame("Frame_Home");
+    Frame_Base *frame = EPDGUI_GetFrame("Frame_rCtr");
     if (frame == NULL) {
-        frame = new Frame_Home();
-        EPDGUI_AddFrame("Frame_Home", frame);
+        frame = new Frame_rCtr();
+        EPDGUI_AddFrame("Frame_rCtr", frame);
     }
     EPDGUI_PushFrame(frame);
     *((int *)(args[0])) = 0;
 }
+
+void key_ota_cb(epdgui_args_vector_t &args) {
+    Frame_Base *frame = EPDGUI_GetFrame("Frame_OTA");
+    if (frame == NULL) {
+        frame = new Frame_OTA();
+        EPDGUI_AddFrame("Frame_OTA", frame);
+    }
+    EPDGUI_PushFrame(frame);
+    *((int *)(args[0])) = 0;
+}
+
 
 Frame_Main::Frame_Main(void) : Frame_Base(false) {
     _frame_name = "Frame_Main";
@@ -232,7 +246,7 @@ Frame_Main::Frame_Main(void) : Frame_Base(false) {
     _key[kKeyRobot]->CanvasPressed()->ReverseColor();
     _key[kKeyRobot]->AddArgs(EPDGUI_Button::EVENT_RELEASED, 0,
                                 (void *)(&_is_run));
-    _key[kKeyRobot]->Bind(EPDGUI_Button::EVENT_RELEASED, key_lifegame_cb);
+    _key[kKeyRobot]->Bind(EPDGUI_Button::EVENT_RELEASED, key_rCtr_cb);
 
     //key9
     _key[kKeyWiFiUpdate]->CanvasNormal()->pushImage(0, 0, 92, 92, ImageResource_main_ota_92x92);
@@ -240,7 +254,7 @@ Frame_Main::Frame_Main(void) : Frame_Base(false) {
     _key[kKeyWiFiUpdate]->CanvasPressed()->ReverseColor();
     _key[kKeyWiFiUpdate]->AddArgs(EPDGUI_Button::EVENT_RELEASED, 0,
                               (void *)(&_is_run));
-    _key[kKeyWiFiUpdate]->Bind(EPDGUI_Button::EVENT_RELEASED, key_sdfile_cb);
+    _key[kKeyWiFiUpdate]->Bind(EPDGUI_Button::EVENT_RELEASED, key_ota_cb);
 
     //key10
     _key[kKeyTestRemote]->CanvasNormal()->pushImage(0, 0, 92, 92, ImageResource_main_reTest_92x92);

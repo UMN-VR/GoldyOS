@@ -186,6 +186,14 @@ void SysInit_Start(void) {
 }
 
 void SysInit_Loading(void *pvParameters) {
+    //Clear Display
+    M5.EPD.Clear(true);
+
+    //Write GoldyOS Logo on Screen
+    M5.EPD.WritePartGram4bpp(92, 300, 356, 300, GoldyOS_Wallpaper_356x300);
+    M5.EPD.UpdateFull(UPDATE_MODE_GC16);
+
+
     #define footer_height 150
     #define margin_bottom 20
     char buf[128];
@@ -204,7 +212,13 @@ void SysInit_Loading(void *pvParameters) {
     M5EPD_Canvas Info(&M5.EPD);
     M5EPD_Canvas canvas(&M5.EPD);
 
-    M5.EPD.Clear();
+    LoadingIMG.createCanvas(96, 96);
+    
+    Info.createCanvas(540, 50);
+    Info.setFreeFont(FF18);
+    Info.setTextSize(1);
+    Info.setTextDatum(CC_DATUM);
+    Info.setTextColor(15);
 
     canvas.createCanvas(540, footer_height);
     canvas.setTextDatum(CC_DATUM);
@@ -218,19 +232,6 @@ void SysInit_Loading(void *pvParameters) {
     sprintf(buf,"In Minnesota");
     canvas.drawString(buf, 270, (footer_height/4)*3);
     canvas.pushCanvas(0,960 - footer_height - margin_bottom,UPDATE_MODE_GC16);
-
-    LoadingIMG.createCanvas(96, 96);
-    
-    Info.createCanvas(540, 50);
-    Info.setFreeFont(FF18);
-    Info.setTextSize(1);
-    Info.setTextDatum(CC_DATUM);
-    Info.setTextColor(15);
-
-    
-    M5.EPD.WritePartGram4bpp(92, 300, 356, 300, GoldyOS_Wallpaper_356x300);
-    M5.EPD.UpdateFull(UPDATE_MODE_GC16);
-
 
     int i = 0;
     char *p;

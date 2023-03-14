@@ -24,27 +24,12 @@ Frame_Setting_Language::Frame_Setting_Language(void) {
         _sw_en->SetLabel(1, "English");
         _sw_en->Canvas(1)->ReverseColor();
         _sw_en->Bind(1, &sw_en_cb);
-        _sw_zh->SetLabel(0, "中文");
-        _sw_zh->SetLabel(1, "中文");
-        _sw_zh->Canvas(1)->ReverseColor();
-        _sw_zh->Bind(1, &sw_zh_cb);
-        _sw_ja->SetLabel(0, "日本語");
-        _sw_ja->SetLabel(1, "日本語");
-        _sw_ja->Canvas(1)->ReverseColor();
-        _sw_ja->Bind(1, &sw_ja_cb);
+
     } else {
         _sw_en->SetLabel(0, "English");
         _sw_en->SetLabel(1, "English");
         _sw_en->Canvas(1)->ReverseColor();
         _sw_en->Bind(1, &sw_en_cb);
-        _sw_zh->SetLabel(0, "Chinese (Need .ttf file)");
-        _sw_zh->SetLabel(1, "Chinese (Need .ttf file)");
-        _sw_zh->Canvas(1)->ReverseColor();
-        _sw_zh->Bind(1, &sw_zh_cb);
-        _sw_ja->SetLabel(0, "Japanese (Need .ttf file)");
-        _sw_ja->SetLabel(1, "Japanese (Need .ttf file)");
-        _sw_ja->Canvas(1)->ReverseColor();
-        _sw_ja->Bind(1, &sw_ja_cb);
     }
 
     _sw_mutex_group = new EPDGUI_MutexSwitch();
@@ -53,19 +38,9 @@ Frame_Setting_Language::Frame_Setting_Language(void) {
     _sw_mutex_group->Add(_sw_ja);
 
     uint8_t language = GetLanguage();
-    if (language == LANGUAGE_JA) {
-        exitbtn("設定");
-        _canvas_title->drawString("言語", 270, 34);
-        _sw_ja->setState(1);
-    } else if (language == LANGUAGE_ZH) {
-        exitbtn("设置");
-        _canvas_title->drawString("语言", 270, 34);
-        _sw_zh->setState(1);
-    } else {
-        exitbtn("Setting");
-        _canvas_title->drawString("Language", 270, 34);
-        _sw_en->setState(1);
-    }
+    exitbtn("Setting");
+    _canvas_title->drawString("Language", 270, 34);
+    _sw_en->setState(1);
 
     _key_exit->AddArgs(EPDGUI_Button::EVENT_RELEASED, 0, (void *)(&_is_run));
     _key_exit->Bind(EPDGUI_Button::EVENT_RELEASED, &Frame_Base::exit_cb);

@@ -23,16 +23,8 @@ Frame_Setting_Wallpaper::Frame_Setting_Wallpaper(void) {
     _sw_wallpapers[GetWallpaperID()]->setState(1);
 
     uint8_t language = GetLanguage();
-    if (language == LANGUAGE_JA) {
-        exitbtn("設定");
-        _canvas_title->drawString("壁紙", 270, 34);
-    } else if (language == LANGUAGE_ZH) {
-        exitbtn("设置");
-        _canvas_title->drawString("壁纸", 270, 34);
-    } else {
         exitbtn("Setting");
-        _canvas_title->drawString("Wallpaper", 270, 34);
-    }
+    _canvas_title->drawString("Wallpaper", 270, 34);
 
     _key_exit->AddArgs(EPDGUI_Button::EVENT_RELEASED, 0, (void *)(&_is_run));
     _key_exit->Bind(EPDGUI_Button::EVENT_RELEASED, &Frame_Base::exit_cb);

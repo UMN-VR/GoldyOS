@@ -1,5 +1,7 @@
 #include "global_setting.h"
 #include "./resources/ImageResource.h"
+#include "./resources/BinaryWallpapers.h"
+#include "./resources/BinaryAppLogos.h"
 #include "esp32-hal-log.h"
 #include <WiFi.h>
 #include "Free_Fonts.h"
@@ -18,7 +20,7 @@ esp_err_t __espret__;
     }
 
 const uint8_t *wallpapers[] = {
-    GoldyOS_Wallpaper_356x300,
+    GoldyOS_Wallpaper_540x960,
     ImageResource_wallpaper_engine_540x960,
     ImageResource_wallpaper_penrose_triangle_540x960};
 
@@ -31,10 +33,7 @@ const uint8_t *kIMGLoading[16] = {
     ImageResource_item_loading_11_32x32, ImageResource_item_loading_12_32x32,
     ImageResource_item_loading_13_32x32, ImageResource_item_loading_14_32x32,
     ImageResource_item_loading_15_32x32, ImageResource_item_loading_16_32x32};
-const char *wallpapers_name_en[] = {"M5Paper", "Engine", "Penrose Triangle"};
-const char *wallpapers_name_zh[] = {"M5Paper", "引擎", "彭罗斯三角"};
-const char *wallpapers_name_ja[] = {"M5Paper", "エンジン",
-                                    "ペンローズの三角形"};
+const char *wallpapers_name_en[] = {"GoldyOS", "Engine", "Penrose Triangle"};
 uint16_t global_wallpaper        = DEFAULT_WALLPAPER;
 uint8_t global_language          = LANGUAGE_EN;
 String global_wifi_ssid;
@@ -106,14 +105,7 @@ const uint8_t *GetWallpaper(void) {
 }
 
 const char *GetWallpaperName(uint16_t wallpaper_id) {
-    switch (global_language) {
-        case LANGUAGE_ZH:
-            return wallpapers_name_zh[wallpaper_id];
-        case LANGUAGE_JA:
-            return wallpapers_name_ja[wallpaper_id];
-        default:
-            return wallpapers_name_en[wallpaper_id];
-    }
+    return wallpapers_name_en[wallpaper_id];
 }
 
 esp_err_t LoadSetting(void) {
