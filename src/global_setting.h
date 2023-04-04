@@ -5,7 +5,7 @@
 #include <nvs.h>
 
 #define WALLPAPER_NUM 3
-#define OS_Version "GoldyOSV6.0.2"
+#define OS_Version "GoldyOSV6.0.3"
 #define Robot_Name "GoldyDogV7.8"
 
 // 是否开启自动关机省电

@@ -5,7 +5,7 @@
 
 #define KEY_W 92
 #define KEY_H 92
-const uint16_t kTimeZoneY = 520;
+const uint16_t kTimeZoneY = 280;
 
 void key_shutdown_cb(epdgui_args_vector_t &args) {
     Shutdown();
@@ -131,7 +131,7 @@ void key_timezone_minus_cb(epdgui_args_vector_t &args) {
 
 void key_timezone_reset_cb(epdgui_args_vector_t &args) {
     int *tz = (int *)(args[0]);
-    (*tz)   = 0;
+    (*tz)   = -6;
     ((EPDGUI_Button *)(args[1]))->setLabel(String(*tz));
     ((EPDGUI_Button *)(args[1]))->Draw(UPDATE_MODE_GL16);
     SetTimeZone(*tz);
@@ -148,19 +148,20 @@ Frame_Setting::Frame_Setting(void) {
     _timezone_canvas->setTextDatum(CL_DATUM);
 
     uint8_t language = GetLanguage();
-    _key_wallpaper   = new EPDGUI_Button(4, 100, 532, 61);
-    _key_language    = new EPDGUI_Button(4, 160, 532, 61);
-    _key_syncntp     = new EPDGUI_Button(4, 220, 532, 61);
-    _key_restart     = new EPDGUI_Button(4, 340, 532, 61);
-    _key_shutdown    = new EPDGUI_Button(4, 400, 532, 61);
+    _key_wallpaper   = new EPDGUI_Button(269, 100, 265, 61);
+    _key_language    = new EPDGUI_Button(269, 160, 265, 61);
+    _key_restart     = new EPDGUI_Button(0, 100, 265, 61);
+    _key_shutdown    = new EPDGUI_Button(0, 160, 265, 61);
+    _key_syncntp     = new EPDGUI_Button(0, 220, 265, 61);
 
-    key_timezone_plus = new EPDGUI_Button("+", 448, kTimeZoneY, 88, 52);
+
+    key_timezone_plus = new EPDGUI_Button("+", 448, kTimeZoneY+3, 88, 52);
     String str        = String(GetTimeZone());
     if (GetTimeZone() > 0) {
         str = "+" + str;
     }
-    key_timezone_reset = new EPDGUI_Button(str, 360, kTimeZoneY, 88, 52);
-    key_timezone_minus = new EPDGUI_Button("-", 272, kTimeZoneY, 88, 52);
+    key_timezone_reset = new EPDGUI_Button(str, 360, kTimeZoneY+3, 88, 52);
+    key_timezone_minus = new EPDGUI_Button("-", 272, kTimeZoneY+3, 88, 52);
 
     key_timezone_plus->AddArgs(EPDGUI_Button::EVENT_RELEASED, 0, &_timezone);
     key_timezone_plus->AddArgs(EPDGUI_Button::EVENT_RELEASED, 1,
